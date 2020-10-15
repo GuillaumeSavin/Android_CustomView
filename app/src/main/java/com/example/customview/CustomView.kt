@@ -10,11 +10,6 @@ import org.jetbrains.anko.info
 
 const val nbBall : Int = 1
 class CustomView : View, AnkoLogger {
-
-    //private var mPaint = Paint()
-    //lateinit var mCircle : MagicCircle
-    //lateinit var mCircle2 : MagicCircle
-    //lateinit var mAleaCircle : MagicCircle
     lateinit var mAleaTabMagicCircle: TabMagicCircle
     var isTouch : Boolean = false
 
