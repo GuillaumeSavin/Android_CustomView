@@ -1,21 +1,25 @@
 package com.example.customview
 
+import TabMagicCircle
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import java.text.AttributedCharacterIterator
-
+const val nbBall : Int = 1
 class CustomView : View, AnkoLogger {
 
-    private var mPaint = Paint()
-    var magicArray = ArrayList<MagicCircle>()
-    lateinit var mCircle : MagicCircle
-    lateinit var mCircle2 : MagicCircle
+    //private var mPaint = Paint()
+    //lateinit var mCircle : MagicCircle
+    //lateinit var mCircle2 : MagicCircle
+    //lateinit var mAleaCircle : MagicCircle
+    lateinit var mAleaTabMagicCircle: TabMagicCircle
+    var isTouch : Boolean = false
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         init()
@@ -23,26 +27,40 @@ class CustomView : View, AnkoLogger {
     constructor(context: Context) : this(context, null)
 
     private fun init() {
-        mPaint.color = Color.BLUE
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (event != null) {
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                val touchedCx = event?.rawX?.toInt()
+                val touchedCy = event?.rawY?.toInt()
+                val mTouchedCircle = MagicCircle(width, height)
+                if (touchedCx != null) {
+                    if (touchedCy != null) {
+                        mTouchedCircle.genererBalleAleatoire(width, height, cx = touchedCx, cy = touchedCy)
+                        mAleaTabMagicCircle.tab.add(mTouchedCircle)
+                    }
+                }
+            }
+        }
+
+        return true
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        mCircle.move()
-        mCircle2.move()
-        canvas?.drawCircle(mCircle.cx, mCircle.cy, mCircle.rad, mPaint)
-        canvas?.drawCircle(mCircle2.cx, mCircle2.cy, mCircle2.rad, mPaint)
+
+        for (ball in mAleaTabMagicCircle.tab) {
+            ball.move()
+            canvas?.drawCircle(ball.cx, ball.cy, ball.rad, ball.color)
+        }
         invalidate()
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        info("width : $width height: $height")
-        mCircle = MagicCircle(width, height)
-        mCircle2 = MagicCircle(width, height)
-        mCircle2.cx = 100F
-        mCircle2.cy = 100F
-        mCircle2.rad = 80F
+        mAleaTabMagicCircle = TabMagicCircle()
+        mAleaTabMagicCircle.genererTabAleatoire(width, height)
     }
 
     companion object {
