@@ -37,7 +37,7 @@ data class MagicCircle(val maxX: Int, val maxY: Int) : AnkoLogger
         val aleaRed = ThreadLocalRandom.current().nextInt(0, 255)
         val aleaBlue = ThreadLocalRandom.current().nextInt(0, 255)
         val aleaGreen = ThreadLocalRandom.current().nextInt(0, 255)
-        val aleaRad = ThreadLocalRandom.current().nextInt(0, maxY / 10).toFloat()
+        val aleaRad = ThreadLocalRandom.current().nextInt(1, maxY / 10).toFloat()
         val maxX = width - aleaRad
         val maxY = height - aleaRad
         if (cx == -1 && cy == -1) {
@@ -48,12 +48,12 @@ data class MagicCircle(val maxX: Int, val maxY: Int) : AnkoLogger
             aleaCy = cy.toFloat()
         }
 
-        val aleaDx = ThreadLocalRandom.current().nextInt(0, maxX.toInt() / 100)
-        val aleaDy = ThreadLocalRandom.current().nextInt(0, maxY.toInt() / 100)
+        val aleaDx = ThreadLocalRandom.current().nextInt(1, maxX.toInt() / 100)
+        val aleaDy = ThreadLocalRandom.current().nextInt(1, maxY.toInt() / 100)
         val aleaBalle = MagicCircle(width, height)
         aleaColor.color = rgb(aleaRed, aleaGreen, aleaBlue)
-
-        info("aleaCx: $aleaCx aleaCy: $aleaCy width: $width height: $height")
+        val calcX = cx + rad
+        val calcY = cy + rad
 
         this.rad = aleaRad
         this.cx = aleaCx

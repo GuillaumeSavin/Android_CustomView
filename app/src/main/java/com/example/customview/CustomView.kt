@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 const val nbBall : Int = 1
 class CustomView : View, AnkoLogger {
@@ -34,6 +35,24 @@ class CustomView : View, AnkoLogger {
                 if (touchedCx != null) {
                     if (touchedCy != null) {
                         mTouchedCircle.genererBalleAleatoire(width, height, cx = touchedCx, cy = touchedCy)
+                        if (mTouchedCircle.rad + mTouchedCircle.cx > width) {
+                            mTouchedCircle.cx = width - (mTouchedCircle.rad * 2)
+                            if (mTouchedCircle.cy - mTouchedCircle.rad < 0)
+                                mTouchedCircle.cy += mTouchedCircle.rad * 2
+                        }
+                        if (mTouchedCircle.cx - mTouchedCircle.rad < 0) {
+                            mTouchedCircle.cx += mTouchedCircle.rad * 2
+                        }
+                        if (mTouchedCircle.rad + mTouchedCircle.cy > height) {
+                            mTouchedCircle.cy = height - (mTouchedCircle.rad * 2)
+                            if (mTouchedCircle.cx - mTouchedCircle.rad < 0) {
+                                mTouchedCircle.cx += mTouchedCircle.rad * 2
+                            }
+                        }
+                        if((mTouchedCircle.rad + mTouchedCircle.cx) > width && (mTouchedCircle.rad + mTouchedCircle.cy > height)) {
+                            mTouchedCircle.cx = width - (mTouchedCircle.rad * 2)
+                            mTouchedCircle.cy = height - (mTouchedCircle.rad * 2)
+                        }
                         mAleaTabMagicCircle.tab.add(mTouchedCircle)
                     }
                 }
