@@ -1,16 +1,12 @@
 package com.example.customview
 
-import TabMagicCircle
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import java.text.AttributedCharacterIterator
+
 const val nbBall : Int = 1
 class CustomView : View, AnkoLogger {
 

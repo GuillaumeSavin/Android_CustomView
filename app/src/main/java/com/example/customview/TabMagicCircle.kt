@@ -1,3 +1,5 @@
+package com.example.customview
+
 import com.example.customview.MagicCircle
 import com.example.customview.nbBall
 
